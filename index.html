@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Crie convites personalizados para seus eventos: escolha cor, tema, capa e estilo claro ou escuro." />
+  <title>Convida · Gerador de Convites</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./style.css" />
+  <script src="./script.js" defer></script>
+</head>
+<body>
+  <header class="header">
+    <div class="container header-inner">
+      <span class="brand"><span class="brand-mark" aria-hidden="true">✦</span> Convida</span>
+      <p class="header-tagline">Gerador de convites para eventos</p>
+    </div>
+  </header>
+
+  <main class="container layout">
+    <!-- ============ FORMULÁRIO ============ -->
+    <form id="event-form" class="form" novalidate aria-labelledby="form-title">
+      <div class="form-intro">
+        <h1 id="form-title">Crie o convite do seu evento</h1>
+        <p>Preencha as informações, escolha o visual e gere um convite pronto para compartilhar.
+          Campos com <span class="required-mark" aria-hidden="true">*</span> são obrigatórios.</p>
+      </div>
+
+      <!-- ---------- Informações ---------- -->
+      <fieldset class="card">
+        <legend class="card-title"><span class="step">1</span> Informações do evento</legend>
+
+        <div class="field" data-field="title">
+          <label for="title">Título do evento <span class="required-mark" aria-hidden="true">*</span></label>
+          <input id="title" name="title" type="text" maxlength="80" placeholder="Ex.: Aniversário de 30 anos da Ana" required aria-describedby="title-error" />
+          <p class="error-message" id="title-error"></p>
+        </div>
+
+        <div class="field-row">
+          <div class="field" data-field="start">
+            <label for="start">Início <span class="required-mark" aria-hidden="true">*</span></label>
+            <input id="start" name="start" type="datetime-local" required aria-describedby="start-error" />
+            <p class="error-message" id="start-error"></p>
+          </div>
+          <div class="field" data-field="end">
+            <label for="end">Fim <span class="required-mark" aria-hidden="true">*</span></label>
+            <input id="end" name="end" type="datetime-local" required aria-describedby="end-error" />
+            <p class="error-message" id="end-error"></p>
+          </div>
+        </div>
+
+        <div class="field" data-field="type">
+          <span class="label" id="type-label">Tipo do evento <span class="required-mark" aria-hidden="true">*</span></span>
+          <div class="segmented" role="radiogroup" aria-labelledby="type-label" aria-describedby="type-error">
+            <label class="segmented-option">
+              <input type="radio" name="type" value="presencial" required />
+              <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg> Presencial</span>
+            </label>
+            <label class="segmented-option">
+              <input type="radio" name="type" value="online" />
+              <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg> Online</span>
+            </label>
+          </div>
+          <p class="error-message" id="type-error"></p>
+        </div>
+
+        <div class="field" data-field="location">
+          <label for="location" id="location-label">Local <span class="required-mark" aria-hidden="true">*</span></label>
+          <div class="input-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+            <input id="location" name="location" type="text" maxlength="140" placeholder="Endereço, salão, cidade…" required aria-describedby="location-error" />
+          </div>
+          <p class="error-message" id="location-error"></p>
+        </div>
+
+        <div class="field" data-field="description">
+          <label for="description">Descrição <span class="required-mark" aria-hidden="true">*</span></label>
+          <textarea id="description" name="description" rows="4" maxlength="400" placeholder="Conte aos convidados o que vai rolar, dress code, o que levar…" required aria-describedby="description-error description-count"></textarea>
+          <div class="field-footer">
+            <p class="error-message" id="description-error"></p>
+            <span class="counter" id="description-count">0/400</span>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ---------- Contato ---------- -->
+      <fieldset class="card">
+        <legend class="card-title"><span class="step">2</span> Contato</legend>
+
+        <div class="field-row">
+          <div class="field" data-field="email">
+            <label for="email">E-mail <span class="required-mark" aria-hidden="true">*</span></label>
+            <div class="input-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+              <input id="email" name="email" type="email" autocomplete="email" placeholder="voce@email.com" required aria-describedby="email-error" />
+            </div>
+            <p class="error-message" id="email-error"></p>
+          </div>
+          <div class="field" data-field="phone">
+            <label for="phone">Telefone <span class="required-mark" aria-hidden="true">*</span></label>
+            <div class="input-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+              <input id="phone" name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="(11) 91234-5678" maxlength="15" required aria-describedby="phone-error" />
+            </div>
+            <p class="error-message" id="phone-error"></p>
+          </div>
+        </div>
+      </fieldset>
+
+      <!-- ---------- Personalização ---------- -->
+      <fieldset class="card">
+        <legend class="card-title"><span class="step">3</span> Personalização</legend>
+
+        <div class="field">
+          <span class="label" id="style-label">Estilo do convite</span>
+          <label class="theme-toggle" for="style-toggle">
+            <input id="style-toggle" name="style" type="checkbox" value="dark" role="switch" aria-labelledby="style-label" />
+            <span class="theme-toggle-track" aria-hidden="true">
+              <span class="theme-toggle-option is-light">☀️ Claro</span>
+              <span class="theme-toggle-option is-dark">🌙 Escuro</span>
+              <span class="theme-toggle-thumb"></span>
+            </span>
+          </label>
+        </div>
+
+        <div class="field">
+          <span class="label" id="color-label">Cor principal</span>
+          <div class="palette" role="radiogroup" aria-labelledby="color-label">
+            <label class="swatch" style="--swatch: #7c3aed"><input type="radio" name="color" value="#7c3aed" checked /><span class="sr-only">Roxo</span></label>
+            <label class="swatch" style="--swatch: #e11d48"><input type="radio" name="color" value="#e11d48" /><span class="sr-only">Vermelho</span></label>
+            <label class="swatch" style="--swatch: #f97316"><input type="radio" name="color" value="#f97316" /><span class="sr-only">Laranja</span></label>
+            <label class="swatch" style="--swatch: #ca8a04"><input type="radio" name="color" value="#ca8a04" /><span class="sr-only">Dourado</span></label>
+            <label class="swatch" style="--swatch: #16a34a"><input type="radio" name="color" value="#16a34a" /><span class="sr-only">Verde</span></label>
+            <label class="swatch" style="--swatch: #0891b2"><input type="radio" name="color" value="#0891b2" /><span class="sr-only">Turquesa</span></label>
+            <label class="swatch" style="--swatch: #2563eb"><input type="radio" name="color" value="#2563eb" /><span class="sr-only">Azul</span></label>
+            <label class="swatch" style="--swatch: #db2777"><input type="radio" name="color" value="#db2777" /><span class="sr-only">Rosa</span></label>
+          </div>
+        </div>
+
+        <div class="field" data-field="theme">
+          <span class="label" id="theme-label">Tema</span>
+          <div class="themes" role="radiogroup" aria-labelledby="theme-label" aria-describedby="theme-error">
+            <label class="theme-card">
+              <input type="radio" name="theme" value="festa" checked />
+              <img src="./assets/themes/festa.svg" alt="" width="160" height="100" />
+              <span>Festa</span>
+            </label>
+            <label class="theme-card">
+              <input type="radio" name="theme" value="corporativo" />
+              <img src="./assets/themes/corporativo.svg" alt="" width="160" height="100" />
+              <span>Corporativo</span>
+            </label>
+            <label class="theme-card">
+              <input type="radio" name="theme" value="natureza" />
+              <img src="./assets/themes/natureza.svg" alt="" width="160" height="100" />
+              <span>Natureza</span>
+            </label>
+            <label class="theme-card">
+              <input type="radio" name="theme" value="elegante" />
+              <img src="./assets/themes/elegante.svg" alt="" width="160" height="100" />
+              <span>Elegante</span>
+            </label>
+            <label class="theme-card">
+              <input type="radio" name="theme" value="tech" />
+              <img src="./assets/themes/tech.svg" alt="" width="160" height="100" />
+              <span>Tech</span>
+            </label>
+            <label class="theme-card theme-card-custom">
+              <input type="radio" name="theme" value="custom" />
+              <span class="theme-custom-thumb" id="custom-thumb">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 17-5-5-9 8"/></svg>
+              </span>
+              <span>Minha imagem</span>
+            </label>
+          </div>
+          <p class="error-message" id="theme-error"></p>
+        </div>
+
+        <div class="field" data-field="cover">
+          <span class="label" id="cover-label">Imagem de capa <span class="optional">(opcional)</span></span>
+          <div class="upload">
+            <input id="cover" name="cover" type="file" accept="image/png, image/jpeg, image/webp, image/gif" class="sr-only" aria-labelledby="cover-label" aria-describedby="cover-name cover-error" />
+            <label for="cover" class="upload-button">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V4m0 0-4 4m4-4 4 4M4 16v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+              Escolher imagem
+            </label>
+            <span class="upload-name" id="cover-name">Nenhum arquivo selecionado</span>
+            <button type="button" class="upload-remove" id="cover-remove" hidden aria-label="Remover imagem de capa">✕</button>
+          </div>
+          <p class="hint">PNG, JPG, WEBP ou GIF de até 5 MB. Ao enviar, o tema “Minha imagem” é selecionado.</p>
+          <p class="error-message" id="cover-error"></p>
+        </div>
+      </fieldset>
+
+      <p class="form-alert" id="form-alert" role="alert" hidden></p>
+
+      <button type="submit" class="submit-button">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 2.2 5.3L20 9l-4.5 3.8L17 19l-5-3-5 3 1.5-6.2L4 9l5.8-.7z"/></svg>
+        Gerar convite
+      </button>
+    </form>
+
+    <!-- ============ CONVITE ============ -->
+    <section class="preview" aria-labelledby="preview-title" aria-live="polite">
+      <h2 id="preview-title" class="preview-title">Seu convite</h2>
+
+      <div class="preview-empty" id="preview-empty">
+        <svg class="preview-empty-art" viewBox="0 0 48 48" aria-hidden="true"><rect x="6" y="11" width="36" height="26" rx="4"/><path d="m7 13 17 13 17-13"/><path d="m24 4 1.2 2.8L28 8l-2.8 1.2L24 12l-1.2-2.8L20 8l2.8-1.2z"/></svg>
+        <p>Preencha o formulário e clique em <strong>Gerar convite</strong> para ver o resultado aqui.</p>
+      </div>
+
+      <article class="invite" id="invite" hidden>
+        <div class="invite-cover" id="invite-cover">
+          <span class="invite-badge" id="invite-type"></span>
+        </div>
+        <div class="invite-body">
+          <p class="invite-overline">Você está convidado(a)</p>
+          <h3 class="invite-title" id="invite-title"></h3>
+          <p class="invite-description" id="invite-description"></p>
+
+          <ul class="invite-details">
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+              <span id="invite-date"></span>
+            </li>
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true" id="invite-location-icon"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>
+              <span id="invite-location"></span>
+            </li>
+          </ul>
+
+          <div class="invite-contact">
+            <p>Dúvidas? Fale com a organização</p>
+            <a id="invite-email"></a>
+            <a id="invite-phone"></a>
+          </div>
+        </div>
+      </article>
+
+      <div class="preview-actions" id="preview-actions" hidden>
+        <button type="button" class="ghost-button" id="print-button">Imprimir / salvar PDF</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">Desafio Rocketseat · Gerador de Convites</div>
+  </footer>
+</body>
+</html>
